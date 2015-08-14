@@ -55,7 +55,9 @@ Using this command, you will be viewing the information for the first two reads 
 1. There are different character encodings of qualities. If fastq files come from different instruments/timepoints/SRA accessions,they may not have the same quality scheme, and file conversions will be necessary.
 2. Quality scores vary in a semi-systematic way that depends upon things such as instrument, position along read, nucleotide context. Tomorrow, we will explore quality score distributions in the E. coli data and trim low quality bases.
 
-For more info go to the [fastq wiki page](https://en.wikipedia.org/wiki/FASTQ_format)
+More details on the fastq format are covered in the [lesson on QC of Sequence Read Data](https://github.com/devbioinfoguy/wrangling-genomics-HPC/blob/gh-pages/lessons/00-readQC.md#details-on-the-fastq-format)<br>
+
+For the full documentation on fastq, go to [fastq wiki page](https://en.wikipedia.org/wiki/FASTQ_format)
 
 **Aligned reads (sam)**
 Alignment of fastq reads to a reference genome can be conducted with a dizzying array of alignment tools. However, these tools all use the sam format standard. For each read, a sam file will contain many details, including:

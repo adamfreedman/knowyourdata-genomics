@@ -60,6 +60,7 @@ More details on the fastq format are covered in the [lesson on QC of Sequence Re
 For the full documentation on fastq, go to [fastq wiki page](https://en.wikipedia.org/wiki/FASTQ_format)
 
 **Aligned reads (sam)**
+
 Alignment of fastq reads to a reference genome can be conducted with a dizzying array of alignment tools. However, these tools all use the sam format standard. For each read, a sam file will contain many details, including:
 * the chromosome/scaffold to which the read aligned
 * the start position of that alignment

@@ -69,7 +69,8 @@ These files typically have headers that contain important information such as th
 samtools view -H $filename.sam
 ```
 
-For more info go to the [sam format documentation](https://samtools.github.io/hts-specs/SAMv1.pdf)
+For more info on sam files, go to [sam format documentation](https://samtools.github.io/hts-specs/SAMv1.pdf)
+For more on samtools command line arguments, go to [samtools manual](http://www.htslib.org/doc/samtools.html)
 
 **Called genotypes (vcf)**
 * vcf file - [definition](https://samtools.github.io/hts-specs/VCFv4.1.pdf)

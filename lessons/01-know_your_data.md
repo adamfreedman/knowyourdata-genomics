@@ -37,10 +37,24 @@ Learning Objectives:
 
 In this workshop, there are a few bioinformatics-related data types we will focus on (beyond simple text files - although in principle many of the files are text). First let's consider the definition/documentation for these file types:
 
-**Plain-text**
+**Unmapped read data (fastq)**
 
-* fastq   - [definition](https://en.wikipedia.org/wiki/FASTQ_format)
+NGS reads from a sequencing run are stored in fastq (fasta with qualities) files. For each read, there is:
+* a read identifier containing information about the instrument,sequencing run, flow cell coordinates,lane, etc.
+* the nucleotide sequence
+* ascii-encoded quality scores for each called base (-10*log<sub>10</sub> probability of an error)
+* multiple (typically 4) lines per read
+
+To look at the structure of a fastq file, go to /n/regal/datac/fastq (NEED TO MAKE THIS MORE SPECIFIC), and look at the contents of the first fastq file with head
+
+Important Note: there are different character encodings of qualities. Be sure the fastq files you are using, particularly if they come from different instruments/timepoints/SRA accessions use the same quality scheme.
+
+For more info go to the [fastq wiki page](https://en.wikipedia.org/wiki/FASTQ_format)
+
+**Aligned reads (sam)**
 * sam file - [definition](https://samtools.github.io/hts-specs/SAMv1.pdf)
+
+**Called genotypes (vcf)**
 * vcf file - [definition](https://samtools.github.io/hts-specs/VCFv4.1.pdf)
 
 
@@ -104,7 +118,7 @@ $ zcat Escherichia_coli_b_str_rel606.GCA_000017985.1.27.dna.genome.fa.gz |head
 ```
 $ gzip -d Escherichia_coli_b_str_rel606.GCA_000017985.1.27.dna.genome.fa.gz
 ```
-**Tip:** create the 'ref_genome' folder in '~/dc_workshop/data' and use the *cp* command to move the data
+**Tip:** create the 'ref_genome' folder in '/n/regal/datac/$USER' and use the *cp* command to move the data
 
 
 

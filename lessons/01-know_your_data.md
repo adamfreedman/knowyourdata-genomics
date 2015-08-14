@@ -42,17 +42,30 @@ In this workshop, there are a few bioinformatics-related data types we will focu
 NGS reads from a sequencing run are stored in fastq (fasta with qualities) files. For each read, there is:
 * a read identifier containing information about the instrument,sequencing run, flow cell coordinates,lane, etc.
 * the nucleotide sequence
-* ascii-encoded quality scores for each called base (-10*log<sub>10</sub> probability of an error)
+* ascii-encoded phred-scaled quality scores for each called base (phred quality = -10*log<sub>10</sub> probability of an error)
 * multiple (typically 4) lines per read
 
 To look at the structure of a fastq file, go to /n/regal/datac/fastq (NEED TO MAKE THIS MORE SPECIFIC), and look at the contents of the first fastq file with head
 
-**Important Note**: there are different character encodings of qualities. Be sure the fastq files you are using, particularly if they come from different instruments/timepoints/SRA accessions use the same quality scheme.
+*Important things to note:*
+1. There are different character encodings of qualities. If fastq files come from different instruments/timepoints/SRA accessions,they may not have the same quality scheme, and file conversions will be necessary.
+2. Quality scores vary in a semi-systematic way that depends upon things such as instrument, position along read, nucleotide context. Tomorrow, we will explore quality score distributions in the E. coli data and trim low quality bases.
 
 For more info go to the [fastq wiki page](https://en.wikipedia.org/wiki/FASTQ_format)
 
 **Aligned reads (sam)**
-* sam file - [definition](https://samtools.github.io/hts-specs/SAMv1.pdf)
+Alignment of fastq reads to a reference genome can be conducted with a dizzying array of alignment tools. However, these tools all use the sam format standard. For each read, a sam file will contain many details, including:
+* the chromosome/scaffold to which the read aligned
+* the start position of that alignment
+* phred-scaled quality of the alignment
+* a string summarizing matches and mismatches between the read and genome to which it was mapped (CIGAR string)
+
+These files typically have headers that contain important information such as the sequencing strategy, sample ID, and reference genome. We can use samtools, a valuable tool for querying and viewing the contents of a sam file.  For example, to view a header (and not the reads themselves), one can do
+```
+samtools view -H $filename
+```
+
+For more info go to the [sam format documentation](https://samtools.github.io/hts-specs/SAMv1.pdf)
 
 **Called genotypes (vcf)**
 * vcf file - [definition](https://samtools.github.io/hts-specs/VCFv4.1.pdf)

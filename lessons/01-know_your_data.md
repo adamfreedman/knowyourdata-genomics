@@ -47,7 +47,7 @@ NGS reads from a sequencing run are stored in fastq (fasta with qualities) files
 
 To look at the structure of a fastq file, go to /n/regal/datac/fastq (NEED TO MAKE THIS MORE SPECIFIC), and look at the contents of the first fastq file with head
 
-Important Note: there are different character encodings of qualities. Be sure the fastq files you are using, particularly if they come from different instruments/timepoints/SRA accessions use the same quality scheme.
+**Important Note**: there are different character encodings of qualities. Be sure the fastq files you are using, particularly if they come from different instruments/timepoints/SRA accessions use the same quality scheme.
 
 For more info go to the [fastq wiki page](https://en.wikipedia.org/wiki/FASTQ_format)
 

@@ -67,8 +67,8 @@ Alignment of fastq reads to a reference genome can be conducted with a dizzying 
 * phred-scaled quality of the alignment
 * a string summarizing matches and mismatches between the read and genome to which it was mapped (CIGAR string)
 
-|Query Name|flag|Reference sequence|Position|MAPQ|CIGAR|NA|NA|NA|Sequence|Base Qualities|custom flags|
-|:-------------|:--:|:---------------:|:------:|:--:|:---:|:-:|:-:|:-:|:---:|:------------:|:----------:|
+| Query Name | flag | Reference sequence | Position | MAPQ | CIGAR | NA | NA | NA | Sequence | Base Qualities | custom flags |
+| :------------- | :--: | :---------------: | :------: | :--: | :---: | :-: | :-: | :-: | :---: | :------------: | :----------: |
 |SRR097977.141|4|*|0|0|*|*|0|0|TGCCTGACCTTTCTTATGGATTTTCATTTTTTCT|C:CCCCCCCCCCCCCCC87>CC&CC9CC,??0-?||
 |SRR097977.1|0|NC_012967.1|1366270|37|36M|*|0|0|TATTCTGCCATAATGAAATTCGCCACTTGTTAGTGT|CCCCCCCCCCCCCCC>CCCCC7CCCCCCACA?5A5<|XT:A:U  NM:i:1  X0:i:1  X1:i:0  XM:i:1  XO:i:0  XG:i:0  MD:Z:11G24|
 

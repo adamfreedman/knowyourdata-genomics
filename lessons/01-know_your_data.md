@@ -81,13 +81,13 @@ Alignment of fastq reads to a reference genome can be conducted with a dizzying 
 
 These files typically have headers that contain important information such as the sequencing strategy, sample ID, and reference genome. We can use samtools, a valuable tool for querying and viewing the contents of a sam file.  For example, to view a header (and not the reads themselves), one can cd into /n/regal/datac/precomputed/lite/variant_calling/ , and do
 ```
-samtools view -SH SRR097977_alignment.sam
+samtools view -SH /n/regal/datac/precomputed/lite/variant_calling/sam_files/SRR097977_alignment.sam
 ```
 where, 'S' indicates the infile is sam format, the 'H' is for show header only.
 
 To view the actual reads, one simply removes the 'H'. However....using view all by itself will read the entire (very large) sam file to standard out. So, best to pipe to head and look at the first reads.
 ```
-samtools view -S  SRR097977_alignment.sam | head -4
+samtools view -S  /n/regal/datac/precomputed/lite/variant_calling/sam_files/SRR097977_alignment.sam | head -4
 ```
 
 For more info on sam files, go to [sam format documentation](https://samtools.github.io/hts-specs/SAMv1.pdf)<br>

@@ -142,7 +142,14 @@ A handy resource for awk "one-liners" can be found at [awk one liners](http://ww
 * How would you go about calculating the number of reads in a fastq file vs. a sam file?
 * Explore the extent of sequence data generated (and mapped) per sample
 
-### B. What proportion of reads are unmapped? Use 
+### B. How many reads are mapped? How many are unmapped?
+
+* Pick a few sam files and calculate these quantities using one of the tools for selecting columns.
+* Is there much variation among the samples?
+
+### C. Classifying variant types
+
+* How many variants represent mutations from A to C?
 
 
 

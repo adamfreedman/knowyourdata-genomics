@@ -67,9 +67,20 @@ Alignment of fastq reads to a reference genome can be conducted with a dizzying 
 * phred-scaled quality of the alignment
 * a string summarizing matches and mismatches between the read and genome to which it was mapped (CIGAR string)
 
-These files typically have headers that contain important information such as the sequencing strategy, sample ID, and reference genome. We can use samtools, a valuable tool for querying and viewing the contents of a sam file.  For example, to view a header (and not the reads themselves), one can do
+|Query Name|flag|Reference sequence|Position|MAPQ|CIGAR|NA|NA|NA|Sequence|Base Qualities|custom flags|
+|:-------------|:--:|:---------------:|:------:|:--:|:---:|:-:|:-:|:-:|:---:|:------------:|:----------:|
+|SRR097977.141|4|*|0|0|*|*|0|0|TGCCTGACCTTTCTTATGGATTTTCATTTTTTCT|C:CCCCCCCCCCCCCCC87>CC&CC9CC,??0-?||
+|SRR097977.1|0|NC_012967.1|1366270|37|36M|*|0|0|TATTCTGCCATAATGAAATTCGCCACTTGTTAGTGT|CCCCCCCCCCCCCCC>CCCCC7CCCCCCACA?5A5<|XT:A:U  NM:i:1  X0:i:1  X1:i:0  XM:i:1  XO:i:0  XG:i:0  MD:Z:11G24|
+
+These files typically have headers that contain important information such as the sequencing strategy, sample ID, and reference genome. We can use samtools, a valuable tool for querying and viewing the contents of a sam file.  For example, to view a header (and not the reads themselves), one can cd into /n/regal/datac/precomputed/lite/variant_calling/ , and do
 ```
-samtools view -H $filename.sam
+samtools view -SH SRR097977_alignment.sam
+```
+where, 'S' indicates the infile is sam format, the 'H' is for show header only.
+
+To view the actual reads, one simply removes the 'H'. However....using view all by itself will read the entire (very large) sam file to standard out. So, best to pipe to head and look at the first reads.
+```
+samtools view -S  SRR097977_alignment.sam | head -4
 ```
 
 For more info on sam files, go to [sam format documentation](https://samtools.github.io/hts-specs/SAMv1.pdf)<br>

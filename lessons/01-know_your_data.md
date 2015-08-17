@@ -68,16 +68,16 @@ Alignment of fastq reads to a reference genome can be conducted with a dizzying 
 * a string summarizing matches and mismatches between the read and genome to which it was mapped (CIGAR string)
 
 | Query Name | flag | Reference sequence | Position | MAPQ | CIGAR | NA | NA | NA |
-| :----------| :--: | :---------------: | :------: | :--: | :---: | :-: | :-: | :-: |
+| :----------| :----| :---------------: | :------: | :--: | :---: | :-: | :-: | :-: |
 | SRR097977.141 | 4 | * | 0 | 0 | * | * | 0 | 0 |
 | SRR097977.1 | 0 | NC_012967.1 | 1366270 | 37 | 36M | * | 0 | 0 |
 
 <b>Continued.....</b>
 
-| Sequence | Base Qualities | custom flags |
-| :------- | :------------: | :----------: |
-| TGCCTGACCTTTCTTATGGATTTTCATTTTTTCT | C:CCCCCCCCCCCCCCC87>CC&CC9CC,??0-? | |
-| TATTCTGCCATAATGAAATTCGCCACTTGTTAGTGT | CCCCCCCCCCCCCCC>CCCCC7CCCCCCACA?5A5< | XT:A:U etc.,etc.. |
+| Sequence | Base Qualities | 
+| :------- | :------------: | 
+| TGCCTGACCTTTCTTATGGATTTTCATTTTTTCT | C:CCCCCCCCCCCCCCC87>CC&CC9CC,??0-? |
+| TATTCTGCCATAATGAAATTCGCCACTTGTTAGTGT | CCCCCCCCCCCCCCC>CCCCC7CCCCCCACA?5A5< | 
 
 These files typically have headers that contain important information such as the sequencing strategy, sample ID, and reference genome. We can use samtools, a valuable tool for querying and viewing the contents of a sam file.  For example, to view a header (and not the reads themselves), one can cd into /n/regal/datac/precomputed/lite/variant_calling/ , and do
 ```

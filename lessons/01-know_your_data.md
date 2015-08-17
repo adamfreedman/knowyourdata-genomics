@@ -101,11 +101,11 @@ will output the CIGAR strings for the first 20 reads.
 
 Awk is antother such tool. If you wanted to count alignments with a mapping quality>10, one could do something like this:
 ```
-samtools view -S SRR097977_alignment.sam | awk -F"\t" '$2>10{print $0}' | wc
+samtools view -S SRR097977_alignment.sam | awk -F"\t" '$5>10{print $0}' | wc
 ```
 where -F specifies what the field separator is, in this case the tab ("\t"), $2 is the column, and print $0 means print the entire line. 
 
-In this case, the first element of the wc command would tell you the number of reads, which should be 2001758. 
+In this case, the first element of the wc command would tell you the number of reads, which should be 3866316. 
 
 
 You can specify particular columns to print, for example:

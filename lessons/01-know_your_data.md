@@ -136,11 +136,12 @@ A handy resource for awk "one-liners" can be found at [awk one liners](http://ww
 
 ##Exercises 
 
+Discuss with your neighbors in conducting the exercises below.
+
 
 ### A. Calculating the number of reads
 
-* How would you go about calculating the number of reads in a fastq file vs. a sam file?
-* Explore the extent of sequence data generated (and mapped) per sample
+* How would you go about calculating the number of reads in a fastq file vs. a sam file? 
 
 ### B. How many reads are mapped? How many are unmapped?
 
@@ -150,6 +151,6 @@ A handy resource for awk "one-liners" can be found at [awk one liners](http://ww
 ### C. Classifying variant types
 
 * How many variants represent mutations from A to C?
-
+* How would you confirm that a vcf file only contains bi-allelic sites?
 
 

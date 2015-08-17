@@ -90,6 +90,8 @@ To view the actual reads, one simply removes the 'H'. However....using view all 
 samtools view -S  /n/regal/datac/precomputed/lite/variant_calling/sam_files/SRR097977_alignment.sam | head -4
 ```
 
+Samtools has a lot of bells and whistles for querying and manipulating sam (and bam) files, but piping to standard out allows access to other tools for manipulating/analyzing the content of your alignment files. 
+
 For more info on sam files, go to [sam format documentation](https://samtools.github.io/hts-specs/SAMv1.pdf)<br>
 For more on samtools command line arguments, go to [samtools manual](http://www.htslib.org/doc/samtools.html)
 

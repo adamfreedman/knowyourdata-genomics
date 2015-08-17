@@ -99,19 +99,25 @@ samtools view -S SRR097977_alignment.sam | cut  -f 6 |head -20
 will output the CIGAR strings for the first 20 reads.
 
 
-Awk is antother such tool. If you wanted to count alignments with a mapping quality>10, one could do something like this:
+Awk is antother such tool. It can give you quick control over which columns you want to access. For example, to print out only the sequences, one could do:
+```
+samtools view -S SRR097977_alignment.sam | awk -F"\t" '{print $10}'
+```
+
+where -F specifies what the field separator is, and $10 indicates the 10th column. To print out the entire line, your print statement would be '{print $0}' .
+
+One can also print out more than one column, for example:
+
+* {print $1$2$3} prints the first 3 columns separated by (default) spaces
+* {print $1","$4} prints the first and 4th columns separated by a comma
+
+
+If you wanted to count alignments with a mapping quality>10, one could do something like this:
 ```
 samtools view -S SRR097977_alignment.sam | awk -F"\t" '$5>10{print $0}' | wc
 ```
-where -F specifies what the field separator is, in this case the tab ("\t"), $2 is the column, and print $0 means print the entire line. 
 
 In this case, the first element of the wc command would tell you the number of reads, which should be 3866316. 
-
-
-You can specify particular columns to print, for example:
-
-* {print $1$2$3} # prints the first 3 columns separated by (default) spaces
-* {print $1","$4} # prints the first and 4th columns separated by a comma
 
 There are also methods for using bitwise flags encoded in the FLAG field to filter on such features as to whether a read is mapped...to be explored on your own at a future date! In addition, as you might suspect, you can use "|", ">", grep, and other tools you've learned today in conjunction with samtools to perform other operations.
 

@@ -114,9 +114,9 @@ One can also print out more than one column, for example:
 * {print $1","$4} prints the first and 4th columns separated by a comma
 
 
-If you wanted to count alignments with a mapping quality>10, one could do something like this:
+If you wanted to count alignments with a mapping quality greater or equal to 10, one could do something like this:
 ```
-samtools view -S SRR097977_alignment.sam | awk -F"\t" '$5>10{print $0}' | wc
+samtools view -S SRR097977_alignment.sam | awk -F"\t" '$5>=10{print $0}' | wc
 ```
 
 In this case, the first element of the wc command would tell you the number of reads, which should be 3866316. 

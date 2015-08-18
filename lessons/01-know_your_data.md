@@ -118,7 +118,7 @@ Alignment of fastq reads to a reference genome can be conducted with a dizzying 
 |TATTCTGCCATAATGAAATTCGCCACTTGTTAGTGT|CCCCCCCCCCCCCCC>CCCCC7CCCCCCACA?5A5<| 
 
 These files typically have headers that contain important information such as the sequencing strategy, sample ID, and reference genome. We can use samtools, a valuable tool for querying and viewing
- the contents of a sam file.<b>
+ the contents of a sam file.<br>
 
 For example, to view a header (and not the reads themselves), cd into `$PRECOMPUTED/lite/variant_calling/samfiles/`, and try the following:
  

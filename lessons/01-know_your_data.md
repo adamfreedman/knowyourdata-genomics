@@ -150,7 +150,7 @@ An important part of vcf files is the header section, that describes all of the 
 Go ahead and cd into variant_calling/vcfs and look at the header section (lines commented out with ##), and scroll down until you get to the
 column labels, and the first few genotypes. Using less, you can scroll up or down with the up and down arrow keys.
 ```
-less $PRECOMPUTED/lite/variant_calling/vcfsSRR097977_alignment_varfltrd.vcf
+less $PRECOMPUTED/lite/variant_calling/vcfs/SRR097977_alignment_varfltrd.vcf
 ```
 
 * vcf file - [definition](https://samtools.github.io/hts-specs/VCFv4.1.pdf)

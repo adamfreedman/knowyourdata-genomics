@@ -83,19 +83,19 @@ These files typically have headers that contain important information such as th
 Go ahead and cd into variant_calling/sam_files, and try the following:
  
 ```
-samtools view -SH variant_calling/sam_files/SRR097977_alignment.sam
+samtools view -SH $PRECOMPUTED/lite/variant_calling/sam_files/SRR097977_alignment.sam
 ```
 where, 'S' indicates the infile is sam format, the 'H' is for show header only.
 
 To view the actual reads, one simply removes the 'H'. However....using view all by itself will read the entire (very large) sam file to standard out. So, best to pipe to head and look at the first reads.
 ```
-samtools view -S  SRR097977_alignment.sam | head -4
+samtools view -S  $PRECOMPUTED/lite/variant_calling/sam_files/SRR097977_alignment.sam | head -4
 ```
 
 One can also use unix command line tools to parse what comes out of samtools view. One such tool is cut. 
 
 ```
-samtools view -S SRR097977_alignment.sam | cut  -f 6 |head -20
+samtools view -S $PRECOMPUTED/lite/variant_calling/sam_files/SRR097977_alignment.sam | cut  -f 6 |head -20
 ```
 
 will output the CIGAR strings for the first 20 reads.
@@ -103,7 +103,7 @@ will output the CIGAR strings for the first 20 reads.
 
 Awk is antother such tool. It can give you quick control over which columns you want to access. For example, to print out only the sequences, one could do:
 ```
-samtools view -S SRR097977_alignment.sam | awk -F"\t" '{print $10}'
+samtools view -S $PRECOMPUTED/lite/variant_calling/sam_files/SRR097977_alignment.sam | awk -F"\t" '{print $10}'
 ```
 
 where -F specifies what the field separator is, and $10 indicates the 10th column. To print out the entire line, your print statement would be '{print $0}' .
@@ -116,14 +116,14 @@ One can also print out more than one column, for example:
 
 If you wanted to count alignments with a mapping quality greater or equal to 10, one could do something like this:
 ```
-samtools view -S SRR097977_alignment.sam | awk -F"\t" '$5>=10{print $0}' | wc
+samtools view -S $PRECOMPUTED/lite/variant_calling/sam_files/SRR097977_alignment.sam | awk -F"\t" '$5>=10{print $0}' | wc
 ```
 
 In this case, the first element of the wc command would tell you the number of reads, which should be 3866316. 
 
 We could also determine how many sites have a mapping quality equal to 37:
 ```
-samtools view -S SRR097977_alignment.sam | awk -F"\t" '$5==37{print $0}' | wc
+samtools view -S $PRECOMPUTED/lite/variant_calling/sam_files/SRR097977_alignment.sam | awk -F"\t" '$5==37{print $0}' | wc
 ```
 Note the "==" notation. This is the logical statement version of "are equal." 
 

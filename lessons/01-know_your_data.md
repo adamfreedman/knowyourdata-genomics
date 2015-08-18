@@ -1,22 +1,12 @@
-Getting to know your data
+#Getting to know your data
 ===================
 
-Learning Objectives:
+##Learning Objectives:
 -------------------
-#### What's the goal for this lesson?
-* You should be able to identify common features of "data" and data formats and what those features imply
-* You should be able to look at a file and be able to identify the following types of data: fasta, fastq, fastg, sra, sff, vcf, sam, bam, bed, etc...
+
+* You should be able to identify common genomics data formats
 * You should be able to identify where your data came from (provenance)
 * To understand in more detail fastq, sam, and vcf formats
-
-#### At the end of this lesson you should be able to:
-* Recognize file formats
-* Whether your data files are zipped or unzipped. You should have an understanding of file compression.
-* How to determine the file size
-* How many units are in the file (i.e. nucleotides, lines of data, sequence reads, etc.)
-* How to look at data structure using the shell -- does it agree with the file extension?
-* Identify a binary, flat text file? 
- 
 
 
 **The following table shows some of the common types of data files and includes some information about them:**
@@ -38,7 +28,7 @@ Learning Objectives:
 
 In this workshop, there are a few bioinformatics-related data types we will focus on (beyond simple text files - although in principle many of the files are text). First let's consider the definition/documentation for these file types:
 
-**Unmapped read data (FASTQ)**
+##Unmapped read data (FASTQ)
 
 NGS reads from a sequencing run are stored in fastq (fasta with qualities). Although it looks complicated  (and maybe it is), its easy to understand the [fastq](https://en.wikipedia.org/wiki/FASTQ_format) format with a little decoding. Some rules about the format include...
 
@@ -107,7 +97,7 @@ As mentioned above, line 4 is a encoding of the quality. In this case, the code 
 * Quality scores vary in a semi-systematic way that depends upon things such as instrument, position along read, nucleotide context.
 
 
-**Aligned reads (sam)**
+##Aligned reads (sam)
 
 Alignment of fastq reads to a reference genome can be conducted with a dizzying array of alignment tools. However, these tools all use the sam format standard. For each read, a sam file (or a binary, compressed [bam](https://www.broadinstitute.org/igv/BAM) ) will contain many details, including:
 * the chromosome/scaffold to which the read aligned
@@ -130,19 +120,19 @@ Alignment of fastq reads to a reference genome can be conducted with a dizzying 
 These files typically have headers that contain important information such as the sequencing strategy, sample ID, and reference genome. We can use samtools, a valuable tool for querying and viewing the contents of a sam file.  For example, to view a header (and not the reads themselves), one can cd into /n/regal/datac/precomputed/lite/variant_calling/ , and do
 Go ahead and cd into variant_calling/sam_files, and try the following:
  
-```
+```bash
 samtools view -SH $PRECOMPUTED/lite/variant_calling/sam_files/SRR097977_alignment.sam
 ```
 where, 'S' indicates the infile is sam format, the 'H' is for show header only.
 
 To view the actual reads, one simply removes the 'H'. However....using view all by itself will read the entire (very large) sam file to standard out. So, best to pipe to head and look at the first reads.
-```
+```bash
 samtools view -S  $PRECOMPUTED/lite/variant_calling/sam_files/SRR097977_alignment.sam | head -4
 ```
 
 One can also use unix command line tools to parse what comes out of samtools view. One such tool is cut. 
 
-```
+```bash
 samtools view -S $PRECOMPUTED/lite/variant_calling/sam_files/SRR097977_alignment.sam | cut  -f 6 |head -20
 ```
 
@@ -150,7 +140,7 @@ will output the CIGAR strings for the first 20 reads.
 
 
 Awk is antother such tool. It can give you quick control over which columns you want to access. For example, to print out only the sequences, one could do:
-```
+```bash
 samtools view -S $PRECOMPUTED/lite/variant_calling/sam_files/SRR097977_alignment.sam | awk -F"\t" '{print $10}'
 ```
 
@@ -163,14 +153,14 @@ One can also print out more than one column, for example:
 
 
 If you wanted to count alignments with a mapping quality greater or equal to 10, one could do something like this:
-```
+```bash
 samtools view -S $PRECOMPUTED/lite/variant_calling/sam_files/SRR097977_alignment.sam | awk -F"\t" '$5>=10{print $0}' | wc
 ```
 
 In this case, the first element of the wc command would tell you the number of reads, which should be 3866316. 
 
 We could also determine how many sites have a mapping quality equal to 37:
-```
+```bash
 samtools view -S $PRECOMPUTED/lite/variant_calling/sam_files/SRR097977_alignment.sam | awk -F"\t" '$5==37{print $0}' | wc
 ```
 Note the "==" notation. This is the logical statement version of "are equal." 
@@ -186,7 +176,7 @@ For more info on sam files, go to [sam format documentation](https://samtools.gi
 For more on samtools command line arguments, go to [samtools manual](http://www.htslib.org/doc/samtools.html)<br>
 A handy resource for awk "one-liners" can be found at [awk one liners](http://www.pement.org/awk/awk1line.txt)<br>
 
-**Called genotypes (vcf)**
+##Called genotypes (vcf)
 
 Variant call format (vcf) files provide detailed information regarding the genomic position of called variants,
 the reference nucleotide at the position of interest, the mutation, measures of confidence in the variant call,
@@ -195,16 +185,13 @@ information, or to also include invariant sites (useful for conducting sliding w
 
 An important part of vcf files is the header section, that describes all of the fields. 
 
-Go ahead and cd into variant_calling/vcfs and look at the header section (lines commented out with ##), and scroll down until you get to the
+Go ahead and cd into `variant_calling/vcfs` and look at the header section (lines commented out with ##), and scroll down until you get to the
 column labels, and the first few genotypes. Using less, you can scroll up or down with the up and down arrow keys.
-```
+```bash
 less $PRECOMPUTED/lite/variant_calling/vcfs/SRR097977_alignment_varfltrd.vcf
 ```
 
-* vcf file - [definition](https://samtools.github.io/hts-specs/VCFv4.1.pdf)
-
-
-**Compressed/binary**
+* for more information on the vcf format - [definition](https://samtools.github.io/hts-specs/VCFv4.1.pdf)
 
 
 ##Exercises 

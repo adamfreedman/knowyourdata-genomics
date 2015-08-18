@@ -3,7 +3,7 @@
 
 ##Learning Objectives:
 -------------------
-
+?
 * You should be able to identify common genomics data formats
 * You should be able to identify where your data came from (provenance)
 * To understand in more detail fastq, sam, and vcf formats

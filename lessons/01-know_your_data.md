@@ -45,9 +45,9 @@ NGS reads from a sequencing run are stored in fastq (fasta with qualities) files
 * ascii-encoded phred-scaled quality scores for each called base (phred quality = -10*log<sub>10</sub> probability of an error)
 * multiple (typically 4) lines per read
 
-To look at the structure of a fastq file, go to /n/regal/datac/fastq (NEED TO MAKE THIS MORE SPECIFIC), and look at the contents of the first fastq file with head
+To look at the structure of a fastq file, go into dc_sample_data where you copied the fastq files, and look at the contents of the first fastq file with head
 ```
-head -8  $filename.fq
+head -8  ~/dc_sample_data/untrimmed_fastq/SRR097977.fastq
 ```
 Using this command, you will be viewing the information for the first two reads in the file.
 
@@ -80,14 +80,16 @@ Alignment of fastq reads to a reference genome can be conducted with a dizzying 
 |TATTCTGCCATAATGAAATTCGCCACTTGTTAGTGT|CCCCCCCCCCCCCCC>CCCCC7CCCCCCACA?5A5<| 
 
 These files typically have headers that contain important information such as the sequencing strategy, sample ID, and reference genome. We can use samtools, a valuable tool for querying and viewing the contents of a sam file.  For example, to view a header (and not the reads themselves), one can cd into /n/regal/datac/precomputed/lite/variant_calling/ , and do
+Go ahead and cd into variant_calling/sam_files, and try the following:
+ 
 ```
-samtools view -SH /n/regal/datac/precomputed/lite/variant_calling/sam_files/SRR097977_alignment.sam
+samtools view -SH variant_calling/sam_files/SRR097977_alignment.sam
 ```
 where, 'S' indicates the infile is sam format, the 'H' is for show header only.
 
 To view the actual reads, one simply removes the 'H'. However....using view all by itself will read the entire (very large) sam file to standard out. So, best to pipe to head and look at the first reads.
 ```
-samtools view -S  /n/regal/datac/precomputed/lite/variant_calling/sam_files/SRR097977_alignment.sam | head -4
+samtools view -S  SRR097977_alignment.sam | head -4
 ```
 
 One can also use unix command line tools to parse what comes out of samtools view. One such tool is cut. 
@@ -119,15 +121,38 @@ samtools view -S SRR097977_alignment.sam | awk -F"\t" '$5>10{print $0}' | wc
 
 In this case, the first element of the wc command would tell you the number of reads, which should be 3866316. 
 
-There are also methods for using bitwise flags encoded in the FLAG field to filter on such features as to whether a read is mapped...to be explored on your own at a future date! In addition, as you might suspect, you can use "|", ">", grep, and other tools you've learned today in conjunction with samtools to perform other operations.
+We could also determine how many sites have a mapping quality equal to 37:
+```
+samtools view -S SRR097977_alignment.sam | awk -F"\t" '$5==37{print $0}' | wc
+```
+Note the "==" notation. This is the logical statement version of "are equal." 
 
-Samtools has a lot of bells and whistles for querying and manipulating sam (and bam) files, but piping to standard out allows access to other tools for manipulating/analyzing the content of your alignment files. 
+There are also methods for using bitwise flags encoded in the FLAG field to filter on such features as 
+to whether a read is mapped...to be explored on your own at a future date! In addition, as you might suspect,
+ you can use "|", ">", grep, and other tools you've learned today in conjunction with samtools to perform other operations.
+
+Samtools has a lot of bells and whistles for querying and manipulating sam (and bam) files, but piping to standard out allows
+ access to other tools for manipulating/analyzing the content of your alignment files. 
 
 For more info on sam files, go to [sam format documentation](https://samtools.github.io/hts-specs/SAMv1.pdf)<br>
 For more on samtools command line arguments, go to [samtools manual](http://www.htslib.org/doc/samtools.html)<br>
 A handy resource for awk "one-liners" can be found at [awk one liners](http://www.pement.org/awk/awk1line.txt)<br>
 
 **Called genotypes (vcf)**
+
+Variant call format (vcf) files provide detailed information regarding the genomic position of called variants,
+the reference nucleotide at the position of interest, the mutation, measures of confidence in the variant call,
+and a diversity of other features including custom annotations. Genotyping tools can set to only output variant site
+information, or to also include invariant sites (useful for conducting sliding window analyses).<br>
+
+An important part of vcf files is the header section, that describes all of the fields. 
+
+Go ahead and cd into variant_calling/vcfs and look at the header section (lines commented out with ##), and scroll down until you get to the
+column labels, and the first few genotypes:
+```
+less SRR097977_alignment_varfltrd.vcf
+```
+
 * vcf file - [definition](https://samtools.github.io/hts-specs/VCFv4.1.pdf)
 
 
@@ -150,7 +175,7 @@ Discuss with your neighbors in conducting the exercises below.
 
 ### C. Classifying variant types
 
-* How many variants represent mutations from A to C?
-* How would you confirm that a vcf file only contains bi-allelic sites?
+* How many variants represent mutations from A to C? Hint: you can link a sequence of queries on particular columns with '|' .
+
 
 

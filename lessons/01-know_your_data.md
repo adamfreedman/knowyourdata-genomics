@@ -7,6 +7,7 @@ Learning Objectives:
 * You should be able to identify common features of "data" and data formats and what those features imply
 * You should be able to look at a file and be able to identify the following types of data: fasta, fastq, fastg, sra, sff, vcf, sam, bam, bed, etc...
 * You should be able to identify where your data came from (provenance)
+* To understand in more detail fastq, sam, and vcf formats
 
 #### At the end of this lesson you should be able to:
 * Recognize file formats
@@ -37,27 +38,74 @@ Learning Objectives:
 
 In this workshop, there are a few bioinformatics-related data types we will focus on (beyond simple text files - although in principle many of the files are text). First let's consider the definition/documentation for these file types:
 
-**Unmapped read data (fastq)**
+**Unmapped read data (FASTQ)**
 
-NGS reads from a sequencing run are stored in fastq (fasta with qualities) files. For each read, there is on separate lines:
+NGS reads from a sequencing run are stored in fastq (fasta with qualities). Although it looks complicated  (and maybe it is), its easy to understand the [fastq](https://en.wikipedia.org/wiki/FASTQ_format) format with a little decoding. Some rules about the format include...
+
+|Line|Description|
+|----|-----------|
+|1|Always begins with '@' and then information about the read|
+|2|The actual DNA sequence|
+|3|Always begins with a '+' and sometimes the same info in line 1|
+|4|Has a string of characters which represent the quality scores; must have same number of characters as line 2|
+
+so for example in our data set, one complete read is:
+```
+$ head -n4 ~/dc_sample_data/untrimmed_fastq/SRR098281.fastq 
+@SRR098281.1 HWUSI-EAS1599_1:2:1:0:318 length=35
+CNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
++SRR098281.1 HWUSI-EAS1599_1:2:1:0:318 length=35
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+```
+This is a pretty bad read. 
+
+Notice that line 4 is:
+```
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+```
+As mentioned above, line 4 is a encoding of the quality. In this case, the code is the [ASCII](https://en.wikipedia.org/wiki/ASCII#ASCII_printable_code_chart) character table. According to the chart a '#' has the value 35 and '!' has the value 33. If only it were that simple. There are actually several historical differences in how Illumina and other players have encoded the scores. Heres the chart from wikipedia:
+
+```
+  SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS.....................................................
+  ..........................XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX......................
+  ...............................IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII......................
+  .................................JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ......................
+  LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL....................................................
+  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+  |                         |    |        |                              |                     |
+ 33                        59   64       73                            104                   126
+  0........................26...31.......40                                
+                           -5....0........9.............................40 
+                                 0........9.............................40 
+                                    3.....9.............................40 
+  0.2......................26...31........41                              
+
+ S - Sanger        Phred+33,  raw reads typically (0, 40)
+ X - Solexa        Solexa+64, raw reads typically (-5, 40)
+ I - Illumina 1.3+ Phred+64,  raw reads typically (0, 40)
+ J - Illumina 1.5+ Phred+64,  raw reads typically (3, 40)
+     with 0=unused, 1=unused, 2=Read Segment Quality Control Indicator (bold) 
+     (Note: See discussion above).
+ L - Illumina 1.8+ Phred+33,  raw reads typically (0, 41)
+ ```
+ So using the Illumina 1.8 encouding, which is what you will mostly see from now on, our first c is called with a Phred score of 0 and our Ns are called with a score of 2. Read quality is assessed using the Phred Quality Score.  This score is logarithmically based and the score values can be interpreted as follows:
+
+|Phred Quality Score |Probability of incorrect base call |Base call accuracy|
+|:-------------------|:---------------------------------:|-----------------:|
+|10	|1 in 10 |	90%|
+|20	|1 in 100|	99%|
+|30	|1 in 1000|	99.9%|
+|40	|1 in 10,000|	99.99%|
+|50	|1 in 100,000|	99.999%|
+|60	|1 in 1,000,000|	99.9999%|
+
 * a read identifier containing information about the instrument,sequencing run, flow cell coordinates,lane, etc.
 * the nucleotide sequence
 * ascii-encoded phred-scaled quality scores for each called base (phred quality = -10*log<sub>10</sub> probability of an error)
 * multiple (typically 4) lines per read
+* There are different character encodings of qualities. If fastq files come from different instruments/timepoints/SRA accessions, may be an issue
+* Quality scores vary in a semi-systematic way that depends upon things such as instrument, position along read, nucleotide context.
 
-To look at the structure of a fastq file, go into dc_sample_data where you copied the fastq files, and look at the contents of the first fastq file with head
-```
-head -8  ~/dc_sample_data/untrimmed_fastq/SRR097977.fastq
-```
-Using this command, you will be viewing the information for the first two reads in the file.
-
-*Important things to note:*
-1. There are different character encodings of qualities. If fastq files come from different instruments/timepoints/SRA accessions,they may not have the same quality scheme, and file conversions will be necessary.
-2. Quality scores vary in a semi-systematic way that depends upon things such as instrument, position along read, nucleotide context. Tomorrow, we will explore quality score distributions in the E. coli data and trim low quality bases.
-
-More details on the fastq format are covered in the [lesson on QC of Sequence Read Data](https://github.com/devbioinfoguy/wrangling-genomics-HPC/blob/gh-pages/lessons/00-readQC.md#details-on-the-fastq-format)<br>
-
-For the full documentation on fastq, go to [fastq wiki page](https://en.wikipedia.org/wiki/FASTQ_format)
 
 **Aligned reads (sam)**
 

@@ -218,6 +218,7 @@ Discuss with your neighbors in conducting the exercises below.
 ### C. Classifying variant types
 
 * How many variants represent mutations from A to C? Hint: you can link a sequence of queries on particular columns with '|' .
+* How would you determine how many sites have more than two alleles?
 
 
 

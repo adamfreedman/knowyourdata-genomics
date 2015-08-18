@@ -148,7 +148,7 @@ information, or to also include invariant sites (useful for conducting sliding w
 An important part of vcf files is the header section, that describes all of the fields. 
 
 Go ahead and cd into variant_calling/vcfs and look at the header section (lines commented out with ##), and scroll down until you get to the
-column labels, and the first few genotypes:
+column labels, and the first few genotypes. Using less, you can scroll up or down with the up and down arrow keys.
 ```
 less SRR097977_alignment_varfltrd.vcf
 ```

@@ -193,6 +193,11 @@ column labels, and the first few genotypes. Using less, you can scroll up or dow
 less SRR097977_alignment_varfltrd.vcf
 ```
 
+We'll go into more details concerning vcf files tomorrow when we walk through a variant calling workflow.
+For now, know that vcf, like fastq and sam files, are comprised of structured text that we can parse with a combination of
+bioinformatics and unix command line tools to obtain meaningful information about the sequencing experiment
+and the biology it has been designed to characterize.
+
 * for more information on the vcf format - [definition](https://samtools.github.io/hts-specs/VCFv4.1.pdf)
 
 
